@@ -124,7 +124,7 @@ By following these simple conventions you get a scaleable, repeatable and source
 
 ## Multiple Instances of the Stack
 
-If you need to different instances sizes and scaling characteristics between pipelines, you can create multiple stack. Each can run on a different [Agent Queue](https://buildkite.com/docs/agent/queues), with it's own configuration, or even in a different AWS account.
+If you need to different instances sizes and scaling characteristics between pipelines, you can create multiple stacks. Each can run on a different [Agent Queue](https://buildkite.com/docs/agent/queues), with it's own configuration, or even in a different AWS account.
 
 Examples:
 
