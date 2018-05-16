@@ -71,9 +71,8 @@ Metadata:
 
 Parameters:
   KeyName:
-    Description: SSH keypair used to access the buildkite instances
+    Description: Optional - SSH keypair used to access the buildkite instances
     Type: AWS::EC2::KeyPair::KeyName
-    MinLength: 1
 
   BuildkiteAgentRelease:
     Type: String
@@ -284,6 +283,9 @@ Outputs:
       "Fn::If": [CreateSecretsBucket, { Ref: ManagedSecretsLoggingBucket }, "" ]
 
 Conditions:
+    SetInstanceKey:
+      "Fn::Equals": [ { Ref: KeyName }, "" ]
+
     UseSpotInstances:
       "Fn::Not": [ "Fn::Equals": [ { Ref: SpotPrice }, 0 ] ]
 
@@ -487,7 +489,7 @@ Resources:
     Properties:
       AssociatePublicIpAddress: { Ref: AssociatePublicIpAddress }
       SecurityGroups: [ "Fn::If": [ "CreateSecurityGroup", { Ref: SecurityGroup }, { Ref: SecurityGroupId } ] ]
-      KeyName : { Ref: KeyName }
+      KeyName : { "Fn::If": [ "SetInstanceKey", { Ref: KeyName }, { Ref: 'AWS::NoValue' } ] }
       IamInstanceProfile: { Ref: IAMInstanceProfile }
       InstanceType: { Ref: InstanceType }
       SpotPrice:
